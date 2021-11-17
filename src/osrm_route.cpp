@@ -23,7 +23,7 @@
 
 using namespace osrm;
 
-void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM * osrm, double* result){
+void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM * osrm, double* distance){
 
   RouteParameters params;
 
@@ -44,8 +44,8 @@ void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM *
       // get first route
       auto &routes = json_result.values["routes"].get<json::Array>();
       auto &route = routes.values.at(0).get<json::Object>();
-      const auto distance = route.values["distance"].get<json::Number>().value;
-      const auto duration = route.values["duration"].get<json::Number>().value;
+      const auto r_distance = route.values["distance"].get<json::Number>().value;
+      const auto r_duration = route.values["duration"].get<json::Number>().value;
 
       // and distance from input coordinates to waypoints
       auto &waypoints = json_result.values["waypoints"].get<json::Array>();
@@ -55,10 +55,10 @@ void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM *
       const auto d2 = waypoint2.values["distance"].get<json::Number>().value;
 
       // write out
-      result[0] = distance;
-      result[1] = duration;
-      result[2] = d1;
-      result[3] = d2;
+      distance[0] = r_distance;
+      distance[1] = r_duration;
+      distance[2] = d1;
+      distance[3] = d2;
 
 
       // std::cout << "Distance: " << distance << " meter\n";
@@ -71,10 +71,10 @@ void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM *
       const auto message = json_result.values["message"].get<json::String>().value;
 
       // write out
-      result[0] = -9999.0;
-      result[1] = -9999.0;
-      result[2] = -9999.0;
-      result[3] = -9999.0;
+      distance[0] = -9999.0;
+      distance[1] = -9999.0;
+      distance[2] = -9999.0;
+      distance[3] = -9999.0;
 
 
       //std::cout << "Code: " << code << "\n";

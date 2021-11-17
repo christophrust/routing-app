@@ -22,7 +22,7 @@
 
 #include <cstdlib>
 
-void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM * osrm, double* result);
+void route_osrm(double lon1, double lat1, double lon2, double lat2, const osrm::OSRM * osrm, double* distance);
 
 
 #endif // OSRM_BATCH_APP_H_

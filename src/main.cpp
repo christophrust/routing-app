@@ -1,5 +1,7 @@
 #include "osrm_batch_app.hpp"
 
+using namespace osrm;
+
 int main(int argc, const char *argv[])
 {
     if (argc < 2)
@@ -26,10 +28,10 @@ int main(int argc, const char *argv[])
 
     // The following shows how to use the Route service; configure this service
 
-    std::ifstream in(argv[2]);
+    // std::ifstream in(argv[2]);
 
-    std::string str;
-    std::vector<std::string> strs;
+    // std::string str;
+    // std::vector<std::string> strs;
 
 
     double lat_src, lon_src, lat_dst, lon_dst;
@@ -38,10 +40,10 @@ int main(int argc, const char *argv[])
     lat_dst = 47.2222;
     lon_dst = 15.2322;
 
-    double result[4];
-    route_osrm(lon_src, lat_src, lon_dst, lat_dst, &osrm, result);
+    double distance[4];
+    route_osrm(lon_src, lat_src, lon_dst, lat_dst, &osrm, distance);
 
-    std::cout << "Distance:" << result[0] << std::endl;
+    std::cout << "Distance:" << distance[0] << std::endl;
 
     return EXIT_SUCCESS;
 
