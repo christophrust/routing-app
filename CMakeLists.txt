@@ -27,7 +27,7 @@ if(WIN32 AND MSVC_VERSION LESS 1900)
 endif()
 
 link_directories(${LibOSRM_LIBRARY_DIRS})
-add_executable(osrm-batch-app src/main.cpp src/osrm_route.cpp)
+add_executable(osrm-batch-app src/main.cpp src/osrm_route.cpp src/server_connection_handler.cpp)
 
 find_package(LibOSRM REQUIRED)
 
