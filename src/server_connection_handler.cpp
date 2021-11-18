@@ -9,7 +9,7 @@ void connection_handler(int sockfd, const OSRM *osrm)
     int n;
 
     // infinite loop for chat
-    for (;;) {
+    while (1) {
         bzero(buff, MAX);
 
         // read the message from client and copy it in buffer

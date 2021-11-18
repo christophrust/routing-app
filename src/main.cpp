@@ -1,4 +1,10 @@
 #include "osrm_batch_app.hpp"
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <boost/asio.hpp>
+
+using boost::asio::ip::tcp;
 
 using namespace osrm;
 
@@ -32,58 +38,29 @@ int main(int argc, const char *argv[])
 
     std::cout << "Binding application to 127.0.0.1:" << port << std::endl;
 
+    boost::asio::io_context io_context;
+            tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), std::stoul(port)));
+    /*
+    try
+        {
+            boost::asio::io_context io_context;
+            tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), std::stoul(port)));
+            for (;;)
+                {
+                    tcp::socket socket(io_context);
+                    acceptor.accept(socket);
+                    std::string message = "Blablub!";
+                    std::cout << "New connection!" << std::endl;
 
-    /*  */
-    int sockfd, connfd;
-    socklen_t len;
-    struct sockaddr_in servaddr, cli;
-
-    // socket create and verification
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd == -1) {
-        printf("socket creation failed...\n");
-        exit(0);
-    }
-    else
-        printf("Socket successfully created..\n");
-
-    bzero(&servaddr, sizeof(servaddr));
-
-    // assign IP, PORT
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port = htons(std::stoul(port));
-
-    // Binding newly created socket to given IP and verification
-    if ((bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr))) != 0) {
-        printf("socket bind failed...\n");
-        exit(0);
-    }
-    else
-        printf("Socket successfully binded..\n");
-
-    // Now server is ready to listen and verification
-    if ((listen(sockfd, 5)) != 0) {
-        printf("Listen failed...\n");
-        exit(0);
-    }
-    else
-        printf("Server listening..\n");
-    len = sizeof(cli);
-
-    while (1) {
-        // Accept the data packet from client and verification
-        connfd = accept(sockfd, (struct sockaddr *)&cli, &len);
-        if (connfd < 0) {
-            printf("server accept failed...\n");
+                    boost::system::error_code ignored_error;
+                    boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
+                }
+        } catch (std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
         }
 
-
-        connection_handler(sockfd, &osrm);
-    }
-
-
-
+    */
 
     if (0){
         std::cout << "Waiting for requests...:" << std::endl;
