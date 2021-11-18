@@ -53,7 +53,7 @@ the size of the data body which directly follows in the stream. Hence, clients s
 
 ``` c++
 // sending
-boost::asio::write(socket, boost::asio::buffer(stream_size))
+boost::asio::write(socket, boost::asio::buffer(stream_size));
 boost::asio::write(socket, boost::asio::buffer(data), ignored_error);
 ```
 
