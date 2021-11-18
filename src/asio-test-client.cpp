@@ -19,7 +19,9 @@ int main()
       boost::asio::connect(socket, endpoints);
 
       std::vector<size_t> stream_size(1);
-      std::vector<double> data = {12.222,123.2232,1232.2222};
+      std::vector<double> data(40000);
+      for(int i=0; i<40000; i++) data[i] = (double) i/39999.0;
+
       stream_size[0] = data.size();
 
       boost::asio::write(socket, boost::asio::buffer(stream_size));

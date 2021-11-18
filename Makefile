@@ -15,12 +15,14 @@ simple-test: build/osrm-batch-app
 	LD_LIBRARY_PATH=/usr/local/lib/ ./build/osrm-batch-app /home/cgr/OSM/austria/austria.osrm
 
 asio-server: src/asio-test-server.cpp
-	cd src && g++ -o ../asio-server -std=c++14 -pthread -I -Wall asio-test-server.cpp
+	mkdir -p build && \
+		cd src && g++ -o ../build/asio-server -std=c++14 -pthread -I -Wall asio-test-server.cpp
 
 asio-client: src/asio-test-client.cpp
-	cd src && g++ -o ../asio-client -std=c++14 -pthread -I -Wall asio-test-client.cpp
+	mkdir -p build && \
+		cd src && g++ -o ../build/asio-client -std=c++14 -pthreadl -I -Wall asio-test-client.cpp
 
-asio-test: asio-server asio-client
-	./asio-server &
-	./asio-client
+simple-test:
+	./build/osrm-batch-app ~/OSM/austria/austria.osrm 8081
+
 # end
