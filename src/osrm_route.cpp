@@ -6,8 +6,10 @@ using namespace osrm;
 void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM * osrm, double* distance){
 
   RouteParameters params;
+  // std::cout << "lat1: " << lat1 << ", lon1: " << lon1 <<
+  //   ", lat2: " << lat2 << ", lon2: " << lon2 << std::endl;
 
-  //
+
   params.coordinates.push_back({util::FloatLongitude{lon1}, util::FloatLatitude{lat1}});
   params.coordinates.push_back({util::FloatLongitude{lon2}, util::FloatLatitude{lat2}});
 
@@ -40,6 +42,8 @@ void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM *
       distance[2] = d1;
       distance[3] = d2;
 
+      //std::cout << "dist: " << r_distance << ", dur: " << r_duration <<
+      // ", d1: " << d1 << ", d2: " << d2 << std::endl;
 
       // std::cout << "Distance: " << distance << " meter\n";
       // std::cout << "Duration: " << duration << " seconds\n";

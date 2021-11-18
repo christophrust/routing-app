@@ -1,4 +1,4 @@
-# osrm-batch-app
+# routing-app
 
 ## Dependencies
 
@@ -22,14 +22,14 @@ cd osrm-backend-5.26.0/build && \
 ```
 
 
-## Build osrm-batch-app
+## Build routing-app
 
 To build the application, run:
 ``` sh
-git clone git@github.com:christophrust/osrm-batch-app.git
+git clone git@github.com:christophrust/routing-app.git
 
-cd osrm-batch-app
-make build/osrm-batch-app
+cd routing-app
+make build/routing-app
 ```
 
 ## Run
@@ -38,7 +38,7 @@ If the build is successful and a OSM map has been prepared using `osrm-extract` 
 the application can be started via:
 
 ``` sh
-./build/osrm-batch-app prepared-map.osrm 8080
+./build/routing-app prepared-map.osrm 8080
 ```
 
 
