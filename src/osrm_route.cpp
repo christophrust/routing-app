@@ -1,4 +1,4 @@
-#include "osrm_batch_app.hpp"
+#include "routing_app.hpp"
 
 
 using namespace osrm;

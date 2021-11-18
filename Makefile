@@ -5,7 +5,7 @@
 # @version 0.1
 .PHONY : build clean simple-test asio-test
 
-build/routing-app: $(wildcard src/*.cpp) src/routing-app.hpp
+build/routing_app: $(wildcard src/*.cpp) src/routing_app.hpp
 	mkdir -p build && cd build && rm -rf * && cmake .. && cmake --build .
 
 clean:
