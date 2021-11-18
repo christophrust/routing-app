@@ -24,13 +24,45 @@ cd osrm-backend-5.26.0/build && \
 
 ## Build osrm-batch-app
 
+To build the application, run:
 ``` sh
 git clone git@github.com:christophrust/osrm-batch-app.git
 
 cd osrm-batch-app
-make build
+make build/osrm-batch-app
+```
+
+## Run
+
+If the build is successful and a OSM map has been prepared using `osrm-extract` and `osrm-contract`,
+the application can be started via:
+
+``` sh
+./build/osrm-batch-app prepared-map.osrm 8080
 ```
 
 
 
 ## API
+
+
+The communication with clients follows a very simple API:
+
+The endpoint only accepts binary data. The first 16 bytes (size of one `size_t`) must hold
+the size of the data body which directly follows in the stream. Hence, clients should implement something like
+
+``` c++
+// sending
+boost::asio::write(socket, boost::asio::buffer(stream_size))
+boost::asio::write(socket, boost::asio::buffer(data), ignored_error);
+```
+
+where `stream_size` is a `std::vector<size_t>` of length one and data the corresponding double data array.
+
+The response is obtained by reading from the same connection, e.g.
+
+``` c++
+boost::asio::read(socket, boost::asio::buffer(data), ignored_error);
+```
+where `data` in the response must have the same length as in the sending request.
+

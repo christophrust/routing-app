@@ -48,7 +48,7 @@ int main(int argc, const char *argv[])
                 acceptor.accept(socket);
 
                 // use simple protocol
-                // read first 4 bytes of stream, giving us the length of the body
+                // read first 16 bytes of stream, giving us the length of the body
                 std::vector<std::size_t> stream_size(1);
                 boost::asio::read(socket, boost::asio::buffer(stream_size));
 
