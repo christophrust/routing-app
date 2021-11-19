@@ -1,5 +1,7 @@
 #include "routing_app.hpp"
 
+#include "osrm/route_parameters.hpp"
+
 #include <array>
 
 using namespace osrm;
