@@ -83,33 +83,22 @@ int main(int argc, const char *argv[])
                     result_data[i + 2 * n_request] = distance[2];
                     result_data[i + 3 * n_request] = distance[3];
                 }
-                catch (std::exception& e)
-                    {
-                        std::cerr << e.what() << std::endl;
-                    }
+
+                boost::system::error_code ignored_error;
+                boost::asio::write(socket, boost::asio::buffer(result_data), ignored_error);
             }
+            catch (std::exception& e)
+            {
+                std::cerr << e.what() << std::endl;
+            }
+        }
         // boost::system::error_code ignored_error;
         // boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
 
     }
     catch (std::exception& e)
-        {
-            std::cerr << e.what() << std::endl;
-        }
-
-    if (0){
-        std::cout << "Waiting for requests...:" << std::endl;
-        double lat_src, lon_src, lat_dst, lon_dst;
-        lat_src = 46.3434;
-        lon_src = 14.2322;
-        lat_dst = 47.2222;
-        lon_dst = 15.2322;
-
-        double distance[4];
-        route_osrm(lon_src, lat_src, lon_dst, lat_dst, &osrm, distance);
-
-        std::cout << "Distance:" << distance[0] << std::endl;
-
+    {
+        std::cerr << e.what() << std::endl;
     }
 
     return EXIT_SUCCESS;
