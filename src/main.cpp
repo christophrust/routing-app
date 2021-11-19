@@ -37,42 +37,37 @@ int main(int argc, const char *argv[])
 
 
     std::cout << "Binding application to 127.0.0.1:" << port << std::endl;
-    try {
+    try
+    {
         boost::asio::io_context io_context;
         tcp::acceptor acceptor(io_context, tcp::endpoint(tcp::v4(), std::stoul(port)));
 
+        // double distance[4]{};
+
         for (;;)
+        {
+
+            try
             {
+                tcp::socket socket(io_context);
+                acceptor.accept(socket);
 
-                try {
-                    tcp::socket socket(io_context);
-                    acceptor.accept(socket);
+                // use simple protocol
+                // read first 16 bytes of stream, giving us the length of the body
+                std::vector<std::size_t> stream_size {0};
+                boost::asio::read(socket, boost::asio::buffer(stream_size));
 
-                    // use simple protocol
-                    // read first 16 bytes of stream, giving us the length of the body
-                    std::vector<std::size_t> stream_size(1);
-                    boost::asio::read(socket, boost::asio::buffer(stream_size));
+                std::vector<double> data(stream_size[0]);
+                std::vector<double> result_data(stream_size[0]);
 
-                    std::vector<double> data(stream_size[0]);
-                    std::vector<double> result_data(stream_size[0]);
-
-                    boost::asio::read(socket, boost::asio::buffer(data));
+                boost::asio::read(socket, boost::asio::buffer(data));
 
 
-                    /* Here goes all the heavy lifting to osrm */
-                    int n_request = (int)stream_size[0] / 4;
-                    double lat_src, lon_src, lat_dst, lon_dst;
-                    double distance[4];
+                /* Here goes all the heavy lifting to osrm */
+                const auto n_request = stream_size[0] / 4;
 
-                    for (int i = 0; i < n_request; i++){
-
-                        lat_src = data[i];
-                        lon_src = data[i + n_request];
-                        lat_dst = data[i + 2*n_request];
-                        lon_dst = data[i + 3*n_request];
-
-                        //std::cout << "lat1: " << lat_src << ", lon1: " << lon_src <<
-                        //    ", lat2: " << lat_dst << ", lon2: " << lon_dst << std::endl;
+                for (size_t i = 0; i < n_request; ++i)
+                {
 
                     const auto lat_src = data[i];
                     const auto lon_src = data[i + n_request];
