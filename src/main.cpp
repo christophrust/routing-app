@@ -74,16 +74,19 @@ int main(int argc, const char *argv[])
                         //std::cout << "lat1: " << lat_src << ", lon1: " << lon_src <<
                         //    ", lat2: " << lat_dst << ", lon2: " << lon_dst << std::endl;
 
-                        route_osrm(lon_src, lat_src, lon_dst, lat_dst, &osrm, distance);
+                    const auto lat_src = data[i];
+                    const auto lon_src = data[i + n_request];
+                    const auto lat_dst = data[i + 2*n_request];
+                    const auto lon_dst = data[i + 3*n_request];
 
-                        result_data[i] = distance[0];
-                        result_data[i + n_request] = distance[1];
-                        result_data[i + 2 * n_request] = distance[2];
-                        result_data[i + 3 * n_request] = distance[3];
-                    }
+                    //std::cout << "lat1: " << lat_src << ", lon1: " << lon_src <<
+                    //    ", lat2: " << lat_dst << ", lon2: " << lon_dst << std::endl;
+                    const auto distance = route_osrm(lon_src, lat_src, lon_dst, lat_dst, osrm);
 
-                    boost::system::error_code ignored_error;
-                    boost::asio::write(socket, boost::asio::buffer(result_data), ignored_error);
+                    result_data[i] = distance[0];
+                    result_data[i + n_request] = distance[1];
+                    result_data[i + 2 * n_request] = distance[2];
+                    result_data[i + 3 * n_request] = distance[3];
                 }
                 catch (std::exception& e)
                     {
