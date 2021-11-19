@@ -1,9 +1,12 @@
 #include "routing_app.hpp"
 
+#include <array>
 
 using namespace osrm;
 
-void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM * osrm, double* distance){
+std::array<double, 4> route_osrm(double lon1, double lat1, double lon2, double lat2,
+                                 const OSRM& osrm)
+{
 
   RouteParameters params;
   // std::cout << "lat1: " << lat1 << ", lon1: " << lon1 <<
@@ -17,7 +20,7 @@ void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM *
   engine::api::ResultT result = json::Object();
 
   // Execute routing request, this does the heavy lifting
-  const auto status = osrm->Route(params, result);
+  const auto status = osrm.Route(params, result);
 
   auto &json_result = result.get<json::Object>();
   if (status == Status::Ok)
@@ -65,5 +68,14 @@ void route_osrm(double lon1, double lat1, double lon2, double lat2, const OSRM *
       //std::cout << "Message: " << code << "\n";
       //return 1;
     }
+
+    // write out
+    return std::array<double, 4>{r_distance, r_duration, d1, d2};
+
+  }
+
+  // status == Status::Error
+  // return std::array<double,4>(4, -9999.0);
+  return std::array<double,4>{-9999.0,-9999.0,-9999.0,-9999.0};
 
 }
