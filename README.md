@@ -64,5 +64,5 @@ The response is obtained by reading from the same connection, e.g.
 ``` c++
 boost::asio::read(socket, boost::asio::buffer(data), ignored_error);
 ```
-where `data` in the response must have the same length as in the sending request.
+where `data` in the response must have the same length as in the sending request. The array of the  response corresponds to a column-major matrix where the first column is `distance` (in meters) of the shortest path, the second column is `duration` (in seconds) and third and fourth column are the distances in meters between input locations and the closest points on the road graph.
 
