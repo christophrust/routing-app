@@ -11,12 +11,12 @@ apt-get install wget git g++ cmake libboost-dev libboost-filesystem-dev libboost
     libboost-test-dev libtbb-dev libexpat1-dev
 
 ## download osrm source
-wget https://github.com/Project-OSRM/osrm-backend/archive/v5.26.0.tar.gz
-tar -xzf v5.26.0.tar.gz
-mkdir -p osrm-backend-5.26.0/build
+wget https://github.com/Project-OSRM/osrm-backend/archive/refs/tags/v5.27.1.tar.gz
+tar -xzf v5.27.1.tar.gz
+mkdir -p osrm-backend-5.27.1/build
 
 ## build osrm
-cd osrm-backend-5.26.0/build && \
+cd osrm-backend-5.27.1/build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
     cmake --build . && cmake --build . --target install
 ```
