@@ -57,7 +57,7 @@ boost::asio::write(socket, boost::asio::buffer(stream_size));
 boost::asio::write(socket, boost::asio::buffer(data), ignored_error);
 ```
 
-where `stream_size` is a `std::vector<size_t>` of length one and data the corresponding double data array.
+where `stream_size` is a `std::vector<size_t>` of length one and `data` the corresponding double data array.
 
 The response is obtained by reading from the same connection, e.g.
 
